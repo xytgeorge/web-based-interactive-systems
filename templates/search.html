@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block body %}
+
+<form action="{{ url_for('search_result')  }}" method="post" class="form-horizontal">
+    <div class="form-group">
+      <div class="form-group col-lg-5"> 
+      <label for="userid">Search for a term in database:</label>
+      <input type="text" class="form-control" id="query" name="query" width=30>
+      </div>
+    </div>
+    </div>
+    <div class="controls">
+      <button id="submit" name="submit" class="btn btn-primary">Search</button>
+    </div>
+  </form>
+
+{% endblock %}

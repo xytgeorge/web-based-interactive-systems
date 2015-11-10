@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block body %}
+
+<li class="list-group-item">
+{% if result.metric == 0 %}
+This <b><font color="red">may not</b></font> be a spam!
+{% elif result.metric <= 1 %}
+This <b><font color="red">may</b></font> be a spam!
+{% else %}
+This is <b><font color="red">very likely</b></font> to be a spam!
+{% endif %}</li>
+<li class="list-group-item">There're <b><font color="red">{{ result.dup_no }}</b></font> near duplicated reviews. </li>
+<li class="list-group-item">This user posted <b><font color="red">{{result.reviews_count}}</b></font> reviews in a single day.</h4>
+<li class="list-group-item">The deviation between his/her review scores and others' review scores is <b><font color="red">{{ '%0.2f'| format(result.deviation) }}</b></font></li>
+<li class="list-group-item"><b><font color="red">{{ '%0.2f'| format( result.early_rate  * 100|float) }}%</b></font> of his/her reviews are early reviews: </li>
+<li class="list-group-item">The time difference between this user's earliest and latest reviews is <b><font color="red">{{ result.time_diff / 3600 / 24 }}</b></font> days.</li>
+<li class="list-group-item">He/She gave <b><font color="red">{{ '%0.2f'| format(result.ext_rate * 100|float) }}%</b></font> of the products he/she reviewed 1-* ratings or 5-* ratings.</li>
+{% endblock %}
+

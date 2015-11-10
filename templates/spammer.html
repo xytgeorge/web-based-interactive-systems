@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block body %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Spammer ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for spammer in spammers %}
+        <tr>
+            <td>{{ loop.index  }}</td>
+            <td><a href="spammer_detail?id={{ spammer['_id']  }}" >{{ spammer["_id"]  }}</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

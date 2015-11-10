@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block body %}
+{% for entry in entries %}
+    <li><h2>{{ entry.title  }}</h2>
+    {{ entry.summary  }}
+{% endfor %}
+{% endblock %}

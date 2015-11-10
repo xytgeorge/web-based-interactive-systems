@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block body %}
+<form action="{{ url_for('search_result')  }}" method="post" class="form-horizontal">
+    <div class="form-group">
+      <div class="form-group col-lg-5"> 
+      <label for="userid">Search for a term in database:</label>
+      <input type="text" class="form-control" id="query" name="query" width=30>
+      </div>
+    </div>
+    </div>
+    <div class="controls">
+      <button id="submit" name="submit" class="btn btn-primary">Search</button>
+    </div>
+  </form>
+<h4>We found <font color="red">{{result["total"] }}</font> related items. Here we only display <font color="red">{{ result["hits"]|length}}</font> most related ones.</h4>
+{% for item in result["hits"]  %}
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading{{ loop.index  }}">
+      <h4 class="panel-title">
+      {{ loop.index  }}
+      
+      <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ loop.index  }}" aria-expanded="true" aria-controls="collapse{{ loop.index  }}">
+{{item["_source"]["review/profileName"]}}({{item["_source"]["review/userId"]}}) left a comment "{{item['_source']['review/summary']}}" on product {{item["_source"]["product/title"]}}({{item["_source"]["product/productId"]}})
+ </a>
+    </h4>
+    </div>
+    <div id="collapse{{ loop.index  }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ loop.index  }}">
+      <div class="panel-body">
+      {% if item["_source"]["metric"] == 0 %}
+        This reviewer <b><font color="red">may not</b></font> be a spammer!
+        {% elif item["_source"]["metric"] <= 1 %}
+        This reviewer <b><font color="red">may</b></font> be a spammer!
+        {% else %}
+        This reviewer is <b><font color="red">very likely</b></font> to be a spammer!
+        {% endif %} </br>
+      {{item["_source"]["review/text"]}}
+</form>
+
+</form>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}

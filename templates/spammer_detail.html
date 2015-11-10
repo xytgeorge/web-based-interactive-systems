@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block body %}
+<h3>User Information</h3>
+<ul class="list-group">
+<li class="list-group-item"><b>User ID:</b> {{spammer_info.spammer_reviews[0]["review/userId"] }}</li>
+<li class="list-group-item"><b>User Name:</b> {{spammer_info.spammer_reviews[0]["review/profileName"] }}</li>
+<li class="list-group-item">This user posted <b><font color="red">{{ spammer_info.reviews_count }}</b></font>  reviews in a single day.</h4>
+<li class="list-group-item">The deviation between his/her review scores and others' review scores is <b><font color="red">{{ '%0.2f'| format(spammer_info.deviation) }}</b></font></li>
+<li class="list-group-item"><b><font color="red">{{ '%0.2f'| format( spammer_info.early_rate  * 100|float) }}%</b></font> of his/her reviews are early reviews: </li>
+<li class="list-group-item">The time difference between this user's earliest and latest reviews is <b><font color="red">{{ spammer_info.time_diff / 3600 / 24 }}</b></font> days.</li>
+<li class="list-group-item">He/She gave <b><font color="red">{{ '%0.2f'| format(spammer_info.ext_rate * 100|float) }}%</b></font> of the products he/she reviewed 1-* ratings or 5-* ratings.</li>
+</ul>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+{% for review in spammer_info.spammer_reviews %}
+
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading{{ loop.index  }}">
+      <h4 class="panel-title">
+      {{ loop.index  }}
+      
+      <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ loop.index  }}" aria-expanded="true" aria-controls="collapse{{ loop.index  }}">
+      Comment <b><font color="brown">"{{ review["review/summary"] }}"</b></font> on product <b><font color="blue">"{{ review["product/title"]  }}"</font></b>  
+      </a>
+    </h4>
+    </div>
+    <div id="collapse{{ loop.index  }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ loop.index  }}">
+      <div class="panel-body">
+        Rating: {{  review["review/score"]  }}</p>{{ review["review/text"] }}
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+</ul>
+{% endblock %}

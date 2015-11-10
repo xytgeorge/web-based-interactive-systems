@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block body %}
+<li>Deviation: {{ spammer_info.deviation }}</li>
+<li>Rate of early reviews: {{ spammer_info.early_rate }}</li>
+<li>Time difference of earliest and latest reviews: {{ spammer_info.time_diff }}</li>
+<li>Rate of extreme ratings: {{ spammer_info.ext_rate|round(2) }}</li>
+<li>This user posted at most {{ spammer_info.reviews_count }} reviews in a single day</li>
+
+<div class="container-fluid">
+<div class="accordion" id="accordion2">
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Review ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for review in spammer_info.spammer_reviews %}
+        <tr>
+            <td>{{ loop.index  }}</td>
+            <td>
+                       <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+            {{ review["review/summary"] }}
+            </a>
+              </div>
+              <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
+                <div class="accordion-inner">
+                 {{ review["review/text"] }}
+                </div>
+              </div>
+            </div>
+            </td>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+{% endblock %}
